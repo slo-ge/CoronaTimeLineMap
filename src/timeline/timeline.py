@@ -5,6 +5,7 @@ from collections import OrderedDict
 from dataclasses import dataclass
 from typing import List, Dict
 
+import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import requests
@@ -13,7 +14,6 @@ from timeline.config import GEO_SETTING, BUTTON_MENU_DICT, get_slider_dict, SLID
 
 df = px.data.gapminder()
 
-from api.graph.utils import SimpleCountriesType
 
 
 # class TimeLineGKZ(object):
@@ -83,10 +83,7 @@ def get_county_data():
 	return simple_counties
 
 
-import pandas as pd
-
-
-def bubble_map_infections(simple_countries: SimpleCountriesType):
+def bubble_map_infections():
 	simple_counties: List[SimpleCountyRow] = get_county_data()
 
 	grouped = OrderedDict()
@@ -96,11 +93,10 @@ def bubble_map_infections(simple_countries: SimpleCountriesType):
 		else:
 			grouped[item.time].append(item)
 
-	# write_1(simple_counties)
-	write_3(grouped)
+	write_graph(grouped)
 
 
-def write_3(grouped: Dict):
+def write_graph(grouped: Dict):
 	frames = []
 	for date, simple_counties in grouped.items():
 		df = pd.DataFrame({
@@ -126,8 +122,6 @@ def write_3(grouped: Dict):
 					autocolorscale=False,
 					line_color='rgb(10,10,10)',
 					line_width=0.5,
-					# cmin=0,
-					# cmax=1000,
 					sizemode='area',
 					colorscale='ylorrd',  # https://plotly.com/python/builtin-colorscales/
 					color=df['value'],
@@ -150,3 +144,4 @@ def write_3(grouped: Dict):
 	)
 
 	fig.show()
+	fig.write_html('bubble.html')
