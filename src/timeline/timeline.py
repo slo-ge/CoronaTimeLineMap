@@ -98,6 +98,10 @@ def bubble_map_infections():
 
 def write_graph(grouped: Dict):
 	frames = []
+	with open('austria.json', 'r') as reader:
+		geojson = json.load(reader)
+		print(geojson)
+
 	for date, simple_counties in grouped.items():
 		df = pd.DataFrame({
 			'date_str': [str(item.time) for item in simple_counties],
@@ -116,7 +120,6 @@ def write_graph(grouped: Dict):
 				lon=df['lon'],
 				lat=df['lat'],
 				text=df['value'],
-
 				marker=dict(
 					size=df['value'],
 					autocolorscale=False,

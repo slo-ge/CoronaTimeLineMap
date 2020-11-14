@@ -1,12 +1,12 @@
 GEO_SETTING = dict(
-	scope='europe',
+	#scope='europe',
 	landcolor="#c1c1c1",
 	countrycolor="white",
 	projection_type='mercator',
 	showsubunits=True,
 	lonaxis_range=[9.3, 17.5],
 	lataxis_range=[46, 49.5],
-
+	showcountries=True,
 )
 
 SLIDERS_DICT = {
